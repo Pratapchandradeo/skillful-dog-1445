@@ -68,24 +68,31 @@ public class AdminDaoImp implements AdminDao{
 		
 		try(Connection con =DB_Connection.provideConnection() ) {
 			
-			PreparedStatement ps = con.prepareStatement("insert into Department(dept_Name,Dept_location) values(?,?)");
+			PreparedStatement ps1 = con.prepareStatement("select * from Department where dept_Name=?");
+			ps1.setString(1, dept_Name);	
+			ResultSet rs = ps1.executeQuery();
 			
-			ps.setString(1, dept_Name);
-			ps.setString(2, Dept_location);
-			
-			int x = ps.executeUpdate();
-			
-			if(x>0)
+			if(rs.next() ==false)
 			{
-				message = "Added sucessfully.....";
+				PreparedStatement ps = con.prepareStatement("insert into Department(dept_Name,Dept_location) values(?,?)");
+				
+				ps.setString(1, dept_Name);
+				ps.setString(2, Dept_location);
+				
+				int x = ps.executeUpdate();
+				
+				if(x>0)
+				{
+					message = "Added sucessfully.....";
+				}
 			}
 			else
 			{
-				throw new DepartmentException("Techical error ......");
+				throw new DepartmentException("Department alerdy exist");
 			}
 	
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DepartmentException(e.getMessage());
 		}
 		return message;
 	}
@@ -204,9 +211,9 @@ public class AdminDaoImp implements AdminDao{
 		
 		try(Connection con = DB_Connection.provideConnection()) {
 			
-			PreparedStatement ps = con.prepareStatement("insert into Employee(Emp_Name,Emp_Dept_Name,Emp_salary,Emp_username,Emp_password) values(?,?,?,?,?)");
+			PreparedStatement ps = con.prepareStatement("insert into Employee(Emp_Name,Emp_Dept_id,Emp_salary,Emp_username,Emp_password) values(?,?,?,?,?)");
 			ps.setString(1, employee.getEmp_Name());
-			ps.setString(2, employee.getEmp_Dept_Name());
+			ps.setInt(2, employee.getEmp_Dept_id());
 			ps.setInt(3, employee.getEmp_salary());
 			ps.setString(4, employee.getUserName());
 			ps.setString(5, employee.getPassword());
@@ -230,13 +237,13 @@ public class AdminDaoImp implements AdminDao{
 //	---------------------------------------------------Update Department for particular emp -----------------------------------
 	
 	@Override
-	public String UpdateDepartmentNameInEmployeeTable(String Dept_name, int Emp_id) throws EmployeeException {
+	public String UpdateDepartmentIdInEmployeeTable(int Dept_id, int Emp_id) throws EmployeeException {
 		String message = "Not inserted...";
 		
 		try(Connection con = DB_Connection.provideConnection()){
 			
-			PreparedStatement ps = con.prepareStatement("update employee set Emp_Dept_Name=? where Emp_id=?");
-			ps.setString(1, Dept_name);
+			PreparedStatement ps = con.prepareStatement("update employee set Emp_Dept_id=? where Emp_id=?");
+			ps.setInt(1, Dept_id);
 			ps.setInt(2, Emp_id);
 			
 			int x =ps.executeUpdate();
@@ -357,6 +364,48 @@ public class AdminDaoImp implements AdminDao{
 		
 		
 		return message;
+	}
+
+	@Override
+	public List<Employee> ViewEmployees() throws EmployeeException {
+		List<Employee> li = new ArrayList<>();
+		
+			try(Connection con = DB_Connection.provideConnection()) {
+			
+			PreparedStatement ps = con.prepareStatement("select Emp_id,Emp_Name,Emp_Dept_id,dept_Name,Emp_salary,Emp_username,Emp_password from Employee e INNER JOIN Department d on d.dept_id =e.Emp_Dept_id;");
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				int id = rs.getInt("Emp_id");
+				String Ename = rs.getString("Emp_Name");
+				int EDid = rs.getInt("Emp_Dept_id");
+				String DeptName = rs.getString("dept_Name");
+				int salary = rs.getInt("Emp_salary");
+				String username = rs.getString("Emp_username");
+//				String password = rs.getString("*********");
+				
+				Employee emp = new Employee(id, Ename, EDid,DeptName, salary, username, "*******");
+				li.add(emp);
+			}
+		
+			
+			
+		} catch (SQLException e) {
+			throw new EmployeeException(e.getMessage());
+		}
+		
+		if(li.size()==0)
+		{
+			throw new EmployeeException("There is no Employee..");
+		}
+		
+		
+		
+		
+		
+		
+		return li;
 	}
 
 	

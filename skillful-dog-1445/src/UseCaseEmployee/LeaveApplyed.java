@@ -14,9 +14,6 @@ public class LeaveApplyed {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Enter your Employee id :");
-		int eid = sc.nextInt();
-		
 		System.out.println("Enter the Number of days you want to Leave : ");
 		int days = sc.nextInt();
 		sc.nextLine();
@@ -28,7 +25,7 @@ public class LeaveApplyed {
 		try {
 			String res;
 			try {
-				res = obj.applyForLeave(eid, days, date);
+				res = obj.applyForLeave(days, date);
 				System.out.println(res);
 			} catch (EmployeeException e) {
 				// TODO Auto-generated catch block

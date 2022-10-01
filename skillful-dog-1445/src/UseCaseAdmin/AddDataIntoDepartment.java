@@ -20,10 +20,10 @@ public class AddDataIntoDepartment {
 	
 	AdminDao obj = new AdminDaoImp();
 	try {
-		System.out.println(obj.AddNewDepartments(Dname, Dloca));
+		String res = obj.AddNewDepartments(Dname, Dloca);
+		System.out.println(res);
 	} catch (DepartmentException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println(e.getMessage());
 	}
 	
 	

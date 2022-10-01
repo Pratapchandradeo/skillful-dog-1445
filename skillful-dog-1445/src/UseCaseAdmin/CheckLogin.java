@@ -7,7 +7,7 @@ import AdminDaoImpletation.AdminDaoImp;
 
 public class CheckLogin {
 
-	public static void main(String[] args) {
+	public static String checkLogin() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter the userName :");
@@ -18,7 +18,8 @@ public class CheckLogin {
 		
 		AdminDao ad = new AdminDaoImp();
 		String str = ad.LoginAdmin(username, password);
-		System.out.println(str);
+		return str;
+		
 
 	}
 

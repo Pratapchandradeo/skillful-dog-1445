@@ -14,13 +14,12 @@ public class updatePassword {
 		System.out.println("Enter Your New Password :");
 		String password = sc.nextLine();
 		
-		System.out.println("Enter your Employee id :");
-		int eid = sc.nextInt();
+		
 		
 		EmployeeDao obj = new EmployeeDaoImp();
 		
 		try {
-			String res = obj.updateEmployeePassword(password, eid);
+			String res = obj.updateEmployeePassword(password);
 			System.out.println(res);
 		} catch (EmployeeException e) {
 			System.out.println(e.getMessage());
