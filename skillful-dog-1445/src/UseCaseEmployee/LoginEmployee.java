@@ -22,6 +22,8 @@ public class LoginEmployee {
 		 
 		
 		System.out.println(res);
+		
+		LeaveApplyed.main(null);
 
 	}
 

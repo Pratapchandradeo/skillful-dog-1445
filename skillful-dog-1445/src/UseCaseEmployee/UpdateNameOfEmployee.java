@@ -14,13 +14,12 @@ public class UpdateNameOfEmployee {
 		System.out.println("Enter Your Name :");
 		String name = sc.nextLine();
 		
-		System.out.println("Enter your Employee id :");
-		int eid = sc.nextInt();
+		
 		
 		EmployeeDao obj = new EmployeeDaoImp();
 		
 		try {
-			String res = obj.updateEmployeeName(name, eid);
+			String res = obj.updateEmployeeName(name);
 			System.out.println(res);
 		} catch (EmployeeException e) {
 			System.out.println(e.getMessage());

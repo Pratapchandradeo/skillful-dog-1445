@@ -1,6 +1,6 @@
 package UseCaseAdmin;
 
-import java.sql.SQLException;
+
 import java.util.Scanner;
 
 import AdminDao.AdminDao;
@@ -16,8 +16,8 @@ public class AddEmployee {
 		
 		System.out.println("Enter the Employee name :");
 		String name = sc.nextLine();
-		System.out.println("Enter the Department name : ");
-		String Dname = sc.nextLine();
+		System.out.println("Enter the Department id : ");
+		int Did = sc.nextInt();
 		
 		System.out.println("Enter the salary :");
 		int salary = sc.nextInt();
@@ -34,7 +34,7 @@ public class AddEmployee {
 		Employee emp = new Employee();
 		
 		emp.setEmp_Name(name);
-		emp.setEmp_Dept_Name(Dname);
+		emp.setEmp_Dept_id(Did);
 		emp.setEmp_salary(salary);
 		emp.setUserName(username);
 		emp.setPassword(pass);

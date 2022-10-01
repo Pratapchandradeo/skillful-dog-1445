@@ -20,7 +20,7 @@ public class UpdateUsername {
 		EmployeeDao obj = new EmployeeDaoImp();
 		
 		try {
-			String res = obj.updateEmployeeUsername(username, eid);
+			String res = obj.updateEmployeeUsername(username);
 			System.out.println(res);
 		} catch (EmployeeException e) {
 			System.out.println(e.getMessage());

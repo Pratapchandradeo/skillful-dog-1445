@@ -12,10 +12,10 @@ public interface EmployeeDao {
 	
 	public List<Employee> ViewEmployeeable() throws EmployeeException ;
 	
-	public String updateEmployeeName(String  Emp_Name, int Emp_id)throws EmployeeException;
+	public String updateEmployeeName(String  Emp_Name)throws EmployeeException;
 	
-	public String updateEmployeePassword(String  Emp_password, int Emp_id)throws EmployeeException;
-	public String updateEmployeeUsername(String  Emp_username, int Emp_id)throws EmployeeException;
+	public String updateEmployeePassword(String  Emp_password)throws EmployeeException;
+	public String updateEmployeeUsername(String  Emp_username)throws EmployeeException;
 	
-	public String applyForLeave(int Emp_id,int days,String date) throws LeaveException,EmployeeException;
+	public String applyForLeave(int days,String date) throws LeaveException,EmployeeException;
 }
