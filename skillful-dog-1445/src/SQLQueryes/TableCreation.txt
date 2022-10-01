@@ -1,0 +1,118 @@
+
+//----------------------------------------- skillful_dog_1445 Database creation  -----------------------------------------------------//
+
+
+
+mysql> create database skillful_dog_1445;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> use skillful_dog_1445;
+Database changed
+
+
+//----------------------------------------- Admin Table -----------------------------------------------------//
+
+
+
+mysql> create table Admin(AdminId int primary key auto_increment,
+    -> username varchar(20) Not null unique,
+    -> password varchar(12) Not null unique);
+Query OK, 0 rows affected (0.22 sec)
+
+mysql> desc Admin;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| AdminId  | int         | NO   | PRI | NULL    | auto_increment |
+| username | varchar(20) | NO   | UNI | NULL    |                |
+| password | varchar(12) | NO   | UNI | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Admin(username,password) values('pratap','Error1999');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from Admin;
++---------+----------+-----------+
+| AdminId | username | password  |
++---------+----------+-----------+
+|       1 | pratap   | Error1999 |
++---------+----------+-----------+
+1 row in set (0.00 sec)
+
+//----------------------------------------- Department Table -----------------------------------------------------//
+
+mysql> create table Department(Dept_id int primary key auto_increment,
+    -> dept_Name varchar(20) not null unique,
+    -> Dept_location varchar(20) not null);
+Query OK, 0 rows affected (0.55 sec)
+
+
+mysql> desc Department;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| Dept_id       | int         | NO   | PRI | NULL    | auto_increment |
+| dept_Name     | varchar(20) | NO   | UNI | NULL    |                |
+| Dept_location | varchar(20) | NO   |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+//----------------------------------------- Employee Table -----------------------------------------------------//
+
+mysql> create table Employee(Emp_id int primary key auto_increment,
+    ->      Emp_Name varchar(30) not null,
+    ->      Emp_Dept_Name varchar(20) not null,
+    ->      Emp_salary int not null,
+    ->      Emp_username varchar(20) not null unique,
+    ->      Emp_password varchar(20) not null,
+    ->      foreign key(Emp_Dept_Name) references Department(dept_Name)
+    ->     );
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> desc Employee;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| Emp_id        | int         | NO   | PRI | NULL    | auto_increment |
+| Emp_Name      | varchar(30) | NO   |     | NULL    |                |
+| Emp_Dept_Name | varchar(20) | NO   | MUL | NULL    |                |
+| Emp_salary    | int         | NO   |     | NULL    |                |
+| Emp_username  | varchar(20) | NO   | UNI | NULL    |                |
+| Emp_password  | varchar(20) | NO   |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+//-------------------------------Leave table =-----------------------------------
+
+
+
+mysql> create table ELeave(LEmp_id int unique not null,
+    ->      Number_of_day int not null,
+    		Date_for_leave date,
+    ->      foreign key(LEmp_id) references Employee(Emp_id)
+    ->      );
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> desc eleave;
++----------------+------+------+-----+---------+-------+
+| Field          | Type | Null | Key | Default | Extra |
++----------------+------+------+-----+---------+-------+
+| LEmp_id        | int  | NO   | PRI | NULL    |       |
+| Number_of_day  | int  | NO   |     | NULL    |       |
+| Date_for_leave | date | YES  |     | NULL    |       |
++----------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
