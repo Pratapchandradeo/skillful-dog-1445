@@ -8,7 +8,7 @@ import Exception.EmployeeException;
 
 public class UpdateDepartmentIdinEmp {
 
-	public static void main(String[] args) {
+	public static void UpdateDepartmentIdinEmpTable() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter the new Department Id :");

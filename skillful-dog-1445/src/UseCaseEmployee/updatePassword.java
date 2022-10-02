@@ -8,7 +8,7 @@ import Exception.EmployeeException;
 
 public class updatePassword {
 
-	public static void main(String[] args) {
+	public static void UpdatePassword() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter Your New Password :");

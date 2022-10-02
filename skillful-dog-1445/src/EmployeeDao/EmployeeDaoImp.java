@@ -41,6 +41,8 @@ static int Emp_id;
 //					if(username.equals(user) && password.equals(pass))
 //					{
 						Emp_id=rs.getInt("Emp_id");
+						
+						System.out.println("\n Your Employee Id is :"+Emp_id);
 						message="Login Successfully ......";
 //					}
 				}
@@ -64,12 +66,13 @@ static int Emp_id;
 	
 //-----------------------------------------VIew Employee Table -------------------------------------------------------
 	@Override
-	public List<Employee> ViewEmployeeable() throws EmployeeException {
+	public List<Employee> ViewEmployeeTable() throws EmployeeException {
 		List<Employee> li = new ArrayList<>();
 		
 		try(Connection con = DB_Connection.provideConnection()) {
 			
-			PreparedStatement ps = con.prepareStatement("select Emp_id,Emp_Name,Emp_Dept_id,dept_Name,Emp_salary,Emp_username,Emp_password from Employee e INNER JOIN Department d on d.dept_id =e.Emp_Dept_id;");
+			PreparedStatement ps = con.prepareStatement("select Emp_id,Emp_Name,Emp_Dept_id,dept_Name,Emp_salary,Emp_username,Emp_password from Employee e INNER JOIN Department d on d.dept_id =e.Emp_Dept_id where Emp_id=?");
+			ps.setInt(1, Emp_id);
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next())
@@ -251,6 +254,53 @@ String message ="username Not update ";
 		
 		
 		return message;
+	}
+
+
+	//-------------------------------------Leave Response ___________________________________________
+
+
+
+	@Override
+	public String LeaveResponse() throws LeaveException {
+		String message = "You are not applyed for leave";
+		
+		try(Connection con = DB_Connection.provideConnection()) {
+			PreparedStatement ps = con.prepareStatement("select status from leaveaccept where Emp_id=?");
+			ps.setInt(1, Emp_id);
+			
+			ResultSet rs =ps.executeQuery();
+			if(rs.next())
+			{
+				String status = rs.getString("Status");
+				
+				message ="Your leave Request is accepted";	
+			}
+			else
+			{
+				PreparedStatement ps1 = con.prepareStatement("select status from leavedeny where Emp_id=?");
+				ps1.setInt(1, Emp_id);
+				ResultSet rs1 =ps.executeQuery();
+				if(rs1.next())
+				{
+					String status = rs.getString("Status");
+					
+					message ="Your leave Request is Deny";	
+				}
+				else
+				{
+					throw new LeaveException("You are not apply for leave");
+				}
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new LeaveException(e.getMessage());
+		}
+		
+		
+		return message;
+		
 	}
 
 

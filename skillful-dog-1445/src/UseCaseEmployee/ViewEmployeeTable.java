@@ -9,14 +9,19 @@ import Exception.EmployeeException;
 
 public class ViewEmployeeTable {
 
-	public static void main(String[] args) {
+	public static void ViewEmployeeTableData() {
 		
 		EmployeeDao obj = new EmployeeDaoImp();
 		
 		try {
-			List<Employee> res =obj.ViewEmployeeable();
-			res.forEach( e -> System.out.println(e));
-			
+			List<Employee> res =obj.ViewEmployeeTable();
+			System.out.println("||-----------------------------------------------------------------------------------------------------------||\n \n");
+			res.forEach( e -> {
+				
+			System.out.println(e);
+			System.out.println("_________________________________________________________________________________________________________________________________ \n");
+			});
+			System.out.println("||-----------------------------------------------------------------------------------------------------------||\n \n");
 		} catch (EmployeeException e) {
 			System.out.println(e.getMessage());
 		}

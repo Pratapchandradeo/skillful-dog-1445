@@ -61,26 +61,26 @@ mysql> desc Department;
 //----------------------------------------- Employee Table -----------------------------------------------------//
 
 mysql> create table Employee(Emp_id int primary key auto_increment,
-    ->      Emp_Name varchar(30) not null,
-    ->      Emp_Dept_Name varchar(20) not null,
-    ->      Emp_salary int not null,
-    ->      Emp_username varchar(20) not null unique,
-    ->      Emp_password varchar(20) not null,
-    ->      foreign key(Emp_Dept_Name) references Department(dept_Name)
-    ->     );
-Query OK, 0 rows affected (0.20 sec)
+    ->           Emp_Name varchar(30) not null,
+    ->           Emp_Dept_id int not null ,
+    ->           Emp_salary int not null,
+    ->           Emp_username varchar(20) not null unique,
+    ->           Emp_password varchar(20) not null,
+    ->           foreign key(Emp_Dept_id) references Department(dept_id)
+    ->          );
+Query OK, 0 rows affected (1.12 sec)
 
-mysql> desc Employee;
-+---------------+-------------+------+-----+---------+----------------+
-| Field         | Type        | Null | Key | Default | Extra          |
-+---------------+-------------+------+-----+---------+----------------+
-| Emp_id        | int         | NO   | PRI | NULL    | auto_increment |
-| Emp_Name      | varchar(30) | NO   |     | NULL    |                |
-| Emp_Dept_Name | varchar(20) | NO   | MUL | NULL    |                |
-| Emp_salary    | int         | NO   |     | NULL    |                |
-| Emp_username  | varchar(20) | NO   | UNI | NULL    |                |
-| Emp_password  | varchar(20) | NO   |     | NULL    |                |
-+---------------+-------------+------+-----+---------+----------------+
+mysql> desc employee;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| Emp_id       | int         | NO   | PRI | NULL    | auto_increment |
+| Emp_Name     | varchar(30) | NO   |     | NULL    |                |
+| Emp_Dept_id  | int         | NO   | MUL | NULL    |                |
+| Emp_salary   | int         | NO   |     | NULL    |                |
+| Emp_username | varchar(20) | NO   | UNI | NULL    |                |
+| Emp_password | varchar(20) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
 6 rows in set (0.00 sec)
 
 //-------------------------------Leave table =-----------------------------------
@@ -88,20 +88,53 @@ mysql> desc Employee;
 
 
 mysql> create table ELeave(LEmp_id int unique not null,
-    ->      Number_of_day int not null,
-    		Date_for_leave date,
-    		Status varchar(10),
-    ->      foreign key(LEmp_id) references Employee(Emp_id)
-    ->      );
-Query OK, 0 rows affected (0.14 sec)
+    ->           Number_of_day int not null,
+    ->           Date_for_leave date not null,
+    ->           Status varchar(10),
+    ->           foreign key(LEmp_id) references Employee(Emp_id)
+    ->          );
+Query OK, 0 rows affected (0.19 sec)
 
+mysql> desc eleave;
 +----------------+-------------+------+-----+---------+-------+
 | Field          | Type        | Null | Key | Default | Extra |
 +----------------+-------------+------+-----+---------+-------+
 | LEmp_id        | int         | NO   | PRI | NULL    |       |
 | Number_of_day  | int         | NO   |     | NULL    |       |
-| Date_for_leave | date        | YES  |     | NULL    |       |
-| Status         | varchar(20) | YES  |     | NULL    |       |
+| Date_for_leave | date        | NO   |     | NULL    |       |
+| Status         | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+//------------------------------------------------Leave Accept table ------------------------------------------
+
+mysql> create table leaveaccept like eleave;
+Query OK, 0 rows affected (0.11 sec)
+
+-------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| LEmp_id        | int         | NO   |     | NULL    |       |
+| Number_of_day  | int         | NO   |     | NULL    |       |
+| Date_for_leave | date        | NO   |     | NULL    |       |
+| Status         | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+//---------------------------------Leave Deny table ---------------------------------------------
+
+> create table leavedeny like eleave;
+Query OK, 0 rows affected (0.12 sec)
+
+
+> desc leavedeny;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| LEmp_id        | int         | NO   |     | NULL    |       |
+| Number_of_day  | int         | NO   |     | NULL    |       |
+| Date_for_leave | date        | NO   |     | NULL    |       |
+| Status         | varchar(10) | YES  |     | NULL    |       |
 +----------------+-------------+------+-----+---------+-------+
 4 rows in set (0.00 sec)
 

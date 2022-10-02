@@ -8,7 +8,7 @@ import Exception.EmployeeException;
 
 public class UpdateNameOfEmployee {
 
-	public static void main(String[] args) {
+	public static void updateNameOfEmployee() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter Your Name :");

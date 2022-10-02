@@ -11,7 +11,7 @@ import Exception.EmployeeException;
 
 public class AddEmployee {
 
-	public static void main(String[] args)  {
+	public static void AddEmployeeIn() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter the Employee name :");
