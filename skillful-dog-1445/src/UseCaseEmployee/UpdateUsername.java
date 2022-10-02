@@ -8,14 +8,12 @@ import Exception.EmployeeException;
 
 public class UpdateUsername {
 
-	public static void main(String[] args) {
+	public static void updateUsername() {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter Your New username :");
 		String username = sc.nextLine();
 		
-		System.out.println("Enter your Employee id :");
-		int eid = sc.nextInt();
 		
 		EmployeeDao obj = new EmployeeDaoImp();
 		

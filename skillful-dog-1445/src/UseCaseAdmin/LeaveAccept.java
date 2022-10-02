@@ -8,7 +8,7 @@ import Exception.LeaveException;
 
 public class LeaveAccept {
 
-	public static void main(String[] args) {
+	public static void LeaveAcceptOp() {
 
 		Scanner sc =new Scanner(System.in);
 		

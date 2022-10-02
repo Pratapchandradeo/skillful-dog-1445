@@ -10,7 +10,7 @@ public interface EmployeeDao {
 	
 	public String EmployeLogin(String username , String password);
 	
-	public List<Employee> ViewEmployeeable() throws EmployeeException ;
+	public List<Employee> ViewEmployeeTable() throws EmployeeException ;
 	
 	public String updateEmployeeName(String  Emp_Name)throws EmployeeException;
 	
@@ -18,4 +18,5 @@ public interface EmployeeDao {
 	public String updateEmployeeUsername(String  Emp_username)throws EmployeeException;
 	
 	public String applyForLeave(int days,String date) throws LeaveException,EmployeeException;
+	public String LeaveResponse() throws LeaveException;
 }

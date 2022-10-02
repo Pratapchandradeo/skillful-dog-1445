@@ -10,10 +10,10 @@ public class CheckLogin {
 	public static String checkLogin() {
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Enter the userName :");
+		System.out.print("Enter the userName :~: ");
 		String username = sc.nextLine();
 		
-		System.out.println("Enter the Password :");
+		System.out.print("Enter the Password :~: ");
 		String password = sc.nextLine();
 		
 		AdminDao ad = new AdminDaoImp();

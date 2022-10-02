@@ -8,7 +8,7 @@ import Exception.EmployeeException;
 
 public class LoginEmployee {
 
-	public static void main(String[] args) {
+	public static String main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter your username :");
@@ -21,9 +21,9 @@ public class LoginEmployee {
 		String res = obj.EmployeLogin(username, password);
 		 
 		
-		System.out.println(res);
+		return res;
 		
-		LeaveApplyed.main(null);
+		
 
 	}
 

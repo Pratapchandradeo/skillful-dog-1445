@@ -10,7 +10,7 @@ import Exception.LeaveException;
 
 public class ViewLeaveTable {
 
-	public static void main(String[] args) {
+	public static void ViewLeaveTableData(){
 		
 		AdminDao obj = new AdminDaoImp();
 		

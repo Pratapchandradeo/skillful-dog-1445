@@ -314,9 +314,16 @@ public class AdminDaoImp implements AdminDao{
 		try(Connection con = DB_Connection.provideConnection()) {
 			
 			PreparedStatement ps = con.prepareStatement("update ELeave set status='Accept' where LEmp_id=?");
-			ps.setInt(1, LEmp_id);
-			
+			ps.setInt(1, LEmp_id);	
 			int x = ps.executeUpdate();
+			
+			PreparedStatement ps1 = con.prepareStatement("insert into leaveaccept(Emp_id,Number_of_days,Date,Status) select * from eleave where LEmp_id=?");
+			ps1.setInt(1, LEmp_id);	
+			int y = ps1.executeUpdate();
+			
+			PreparedStatement ps2 = con.prepareStatement("delete from eleave where LEmp_id=?");
+			ps2.setInt(1, LEmp_id);	
+			int z = ps2.executeUpdate();
 			
 			if(x>0)
 			{
@@ -345,8 +352,18 @@ public class AdminDaoImp implements AdminDao{
 			
 			PreparedStatement ps = con.prepareStatement("update ELeave set status='Deny' where LEmp_id=?");
 			ps.setInt(1, LEmp_id);
-			
 			int x = ps.executeUpdate();
+			
+			// insert deny request into deny table 
+			
+			PreparedStatement ps1 = con.prepareStatement("insert into leavedeny(Emp_id,Number_of_days,Date,Status) select * from eleave where LEmp_id=?");
+			ps1.setInt(1, LEmp_id);	
+			int y = ps1.executeUpdate();
+			
+			//Delete the deny requests from eleave table 
+			PreparedStatement ps2 = con.prepareStatement("delete from eleave where LEmp_id=?");
+			ps2.setInt(1, LEmp_id);	
+			int z = ps2.executeUpdate();
 			
 			if(x>0)
 			{
@@ -366,27 +383,35 @@ public class AdminDaoImp implements AdminDao{
 		return message;
 	}
 
+	//----------------------------------------SHow Employee Table -----------------------------------------
+	
 	@Override
 	public List<Employee> ViewEmployees() throws EmployeeException {
+		
 		List<Employee> li = new ArrayList<>();
 		
 			try(Connection con = DB_Connection.provideConnection()) {
-			
-			PreparedStatement ps = con.prepareStatement("select Emp_id,Emp_Name,Emp_Dept_id,dept_Name,Emp_salary,Emp_username,Emp_password from Employee e INNER JOIN Department d on d.dept_id =e.Emp_Dept_id;");
+				
+			PreparedStatement ps = con.prepareStatement("select Emp_id,Emp_Name,Emp_Dept_id,dept_Name,Emp_salary,Emp_username,Emp_password from Employee e INNER JOIN Department d on d.dept_id =e.Emp_Dept_id");
 			ResultSet rs = ps.executeQuery();
 			
-			while(rs.next())
+				while(rs.next())
+				{
+					int id = rs.getInt("Emp_id");
+					String Ename = rs.getString("Emp_Name");
+					int EDid = rs.getInt("Emp_Dept_id");
+					String DeptName = rs.getString("dept_Name");
+					int salary = rs.getInt("Emp_salary");
+					String username = rs.getString("Emp_username");
+//					String password = rs.getString("Emp_password");
+					
+					Employee emp = new Employee(id, Ename, EDid,DeptName, salary, username, "*********");
+					li.add(emp);
+				}
+			
+			if(li.size()==0)
 			{
-				int id = rs.getInt("Emp_id");
-				String Ename = rs.getString("Emp_Name");
-				int EDid = rs.getInt("Emp_Dept_id");
-				String DeptName = rs.getString("dept_Name");
-				int salary = rs.getInt("Emp_salary");
-				String username = rs.getString("Emp_username");
-//				String password = rs.getString("*********");
-				
-				Employee emp = new Employee(id, Ename, EDid,DeptName, salary, username, "*******");
-				li.add(emp);
+				throw new EmployeeException("There is no Employee..");
 			}
 		
 			
@@ -395,10 +420,7 @@ public class AdminDaoImp implements AdminDao{
 			throw new EmployeeException(e.getMessage());
 		}
 		
-		if(li.size()==0)
-		{
-			throw new EmployeeException("There is no Employee..");
-		}
+		
 		
 		
 		

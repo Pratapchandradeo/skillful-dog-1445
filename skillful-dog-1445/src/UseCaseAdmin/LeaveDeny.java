@@ -8,7 +8,7 @@ import Exception.LeaveException;
 
 public class LeaveDeny {
 
-	public static void main(String[] args) {
+	public static void LeaveDenyMsg() {
 Scanner sc =new Scanner(System.in);
 		
 		System.out.println("Enter the Emp_id you want to accept the Leave :");

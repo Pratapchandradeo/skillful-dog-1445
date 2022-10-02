@@ -10,7 +10,7 @@ import Exception.LeaveException;
 
 public class LeaveApplyed {
 
-	public static void main(String[] args) {
+	public static void LeaveApplyedform() {
 		
 		Scanner sc = new Scanner(System.in);
 		
